@@ -16,10 +16,15 @@ class SinglePage extends StatelessWidget {
             SliverAppBar(
               pinned: true,
               automaticallyImplyLeading: false,
-              leading: Icon(
-                CupertinoIcons.back,
-                color: Colors.black,
-                size: 3.h,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  CupertinoIcons.back,
+                  color: Colors.black,
+                  size: 3.h,
+                ),
               ),
               backgroundColor: Colors.white,
               expandedHeight: 30.h,
@@ -56,18 +61,20 @@ class SinglePage extends StatelessWidget {
                     SizedBox(
                       height: 2.h,
                     ),
-                    Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(1000),
-                        color: Colors.grey.shade200,
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 1.3.h),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "مثلا جزو وسایل خانگی",
-                        style: TextStyle(
-                          fontSize: 8.sp,
+                    Center(
+                      child: Container(
+                        width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(1000),
+                          color: Colors.grey.shade200,
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 1.3.h),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "مثلا جزو وسایل خانگی",
+                          style: TextStyle(
+                            fontSize: 8.sp,
+                          ),
                         ),
                       ),
                     )
