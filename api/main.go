@@ -3,14 +3,13 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/y4cn/divar_full/database"
+	"github.com/y4cn/divar_full/model"
+	"github.com/y4cn/divar_full/route"
 )
 
 func main() {
 	db := database.GetDB()
-	// db.AutoMigrate()
-
-	//! change that
-	_ = db
+	db.AutoMigrate(&model.User{})
 
 	gin.SetMode(gin.DebugMode)
 
@@ -20,8 +19,11 @@ func main() {
 	api := engin.Group("/api")
 	v1 := api.Group("/v1")
 
-	//! change that
-	_ = v1
+	{
+		//! user
+		v1.POST("/register", route.RegisterUser)
+		v1.POST("/login", route.LoginUser)
+	}
 
-	engin.Run("3000")
+	engin.Run(":3000")
 }
