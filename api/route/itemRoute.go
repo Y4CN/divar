@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/y4cn/divar_full/database"
@@ -12,41 +13,14 @@ import (
 	"github.com/y4cn/divar_full/model"
 )
 
-func CreateCategory(ctx *gin.Context) {
-	name := ctx.Request.FormValue("name")
-	icon, err := ctx.FormFile("icon")
+func CreateItem(ctx *gin.Context) {
+	title := ctx.Request.FormValue("title")
+	price := ctx.PostForm("price")
 	image, errImage := ctx.FormFile("image")
+	catId := ctx.Param("categoryId")
 
-	if len(name) < 3 {
+	if len(title) < 3 {
 		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage("Invalid name length should be at least 3 characters"))
-		return
-	}
-
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage(err.Error()))
-		return
-	}
-
-	// Source
-	src, err := icon.Open()
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage(err.Error()))
-		return
-	}
-	defer src.Close()
-
-	// Destination
-	dst, err := os.Create(fmt.Sprintf("files/category/%s", icon.Filename))
-	if err != nil {
-		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(err.Error()))
-		return
-	}
-	defer dst.Close()
-
-	// Copy
-	if _, err = io.Copy(dst, src); err != nil {
-		os.Remove(fmt.Sprintf("files/category/%s", icon.Filename))
-		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(err.Error()))
 		return
 	}
 
@@ -66,7 +40,7 @@ func CreateCategory(ctx *gin.Context) {
 	defer srcImage.Close()
 
 	// Destination
-	dstImage, err := os.Create(fmt.Sprintf("files/category/%s", image.Filename))
+	dstImage, err := os.Create(fmt.Sprintf("files/items/%s", image.Filename))
 	if err != nil {
 		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(err.Error()))
 		return
@@ -75,42 +49,53 @@ func CreateCategory(ctx *gin.Context) {
 
 	// Copy
 	if _, err = io.Copy(dstImage, srcImage); err != nil {
-		os.Remove(fmt.Sprintf("files/category/%s", image.Filename))
 		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(err.Error()))
+		os.Remove(fmt.Sprintf("files/items/%s", image.Filename))
+		return
+	}
+	db := database.GetDB()
+	catIdInt, _ := strconv.Atoi(catId)
+
+	//! category
+	var categoryItem *(model.Category)
+	err = db.First(&categoryItem, catIdInt).Error
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage(err.Error()))
+		os.Remove(fmt.Sprintf("files/items/%s", image.Filename))
 		return
 	}
 
-	catModel := model.Category{
-		Name:  name,
-		Icon:  icon.Filename,
-		Image: image.Filename,
+	itemModel := model.Items{
+		Title:      title,
+		Image:      image.Filename,
+		Price:      price,
+		CategoryId: catIdInt,
+		Category:   *categoryItem,
 	}
 
-	db := database.GetDB()
-	res := db.Create(&catModel)
+	res := db.Create(&itemModel)
 
 	if res.Error != nil {
-		os.Remove(fmt.Sprintf("files/category/%s", image.Filename))
-		os.Remove(fmt.Sprintf("files/category/%s", icon.Filename))
 		errMessage := map[string]any{
 			"status":  false,
 			"message": res.Error.Error(),
 		}
+		os.Remove(fmt.Sprintf("files/items/%s", image.Filename))
 		ctx.JSON(http.StatusBadGateway, errMessage)
 		return
 	}
 
 	message := map[string]any{
 		"status": true,
-		"item":   catModel,
+		"item":   itemModel,
 	}
 	ctx.JSON(http.StatusCreated, message)
 }
 
-func GetAllCategory(ctx *gin.Context) {
+func GetAllItems(ctx *gin.Context) {
 	db := database.GetDB()
-	foundCategories := []model.Category{}
-	res := db.Find(&foundCategories)
+	items := []model.Items{}
+	res := db.Preload("Category").Find(&items)
 
 	if res.Error != nil {
 
@@ -120,16 +105,16 @@ func GetAllCategory(ctx *gin.Context) {
 
 	message := map[string]any{
 		"status": true,
-		"item":   foundCategories,
+		"item":   items,
 	}
 	ctx.JSON(http.StatusCreated, message)
 }
 
-func DeleteCategory(ctx *gin.Context) {
+func DeleteItem(ctx *gin.Context) {
 	db := database.GetDB()
 	id := ctx.Param("id")
 
-	res := db.Delete(&model.Category{}, id)
+	res := db.Delete(&model.Items{}, id)
 	if res.Error != nil {
 		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(res.Error.Error()))
 		return

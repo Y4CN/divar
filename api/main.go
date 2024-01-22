@@ -11,6 +11,7 @@ func main() {
 	db := database.GetDB()
 	db.AutoMigrate(&model.User{})
 	db.AutoMigrate(&model.Category{})
+	db.AutoMigrate(&model.Items{})
 
 	gin.SetMode(gin.DebugMode)
 
@@ -31,6 +32,13 @@ func main() {
 		cat.POST("/create", route.CreateCategory)
 		cat.GET("/", route.GetAllCategory)
 		cat.DELETE("/:id", route.DeleteCategory)
+	}
+	{
+		//! items
+		item := v1.Group("/items")
+		item.POST("/create/:categoryId", route.CreateItem)
+		item.GET("/", route.GetAllItems)
+		item.DELETE("/:id", route.DeleteItem)
 	}
 
 	engin.Run(":3000")
