@@ -126,3 +126,24 @@ func DeleteItem(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusCreated, message)
 }
+
+func GetItemByCategoryId(ctx *gin.Context) {
+	cat_id := ctx.Param("categoryId")
+	catInt, _ := strconv.Atoi(cat_id)
+
+	db := database.GetDB()
+	items := []model.Items{}
+
+	res := db.Where("category_id = ?", catInt).Preload("Category").Find(&items)
+
+	if res.Error != nil {
+		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(res.Error.Error()))
+		return
+	}
+
+	message := map[string]any{
+		"status": true,
+		"item":   items,
+	}
+	ctx.JSON(http.StatusCreated, message)
+}

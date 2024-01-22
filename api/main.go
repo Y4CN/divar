@@ -39,6 +39,7 @@ func main() {
 		item.POST("/create/:categoryId", route.CreateItem)
 		item.GET("/", route.GetAllItems)
 		item.DELETE("/:id", route.DeleteItem)
+		item.GET("/:categoryId", route.GetItemByCategoryId)
 	}
 
 	engin.Run(":3000")
