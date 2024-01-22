@@ -10,6 +10,7 @@ import (
 func main() {
 	db := database.GetDB()
 	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.Category{})
 
 	gin.SetMode(gin.DebugMode)
 
@@ -23,6 +24,13 @@ func main() {
 		//! user
 		v1.POST("/register", route.RegisterUser)
 		v1.POST("/login", route.LoginUser)
+	}
+	{
+		//! category
+		cat := v1.Group("/category")
+		cat.POST("/create", route.CreateCategory)
+		cat.GET("/", route.GetAllCategory)
+		cat.DELETE("/:id", route.DeleteCategory)
 	}
 
 	engin.Run(":3000")
