@@ -2,7 +2,6 @@ import 'package:divar_app/const.dart';
 import 'package:divar_app/pages/home/homeScreen.dart';
 import 'package:divar_app/pages/main/mainScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,7 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offAll(const MainScreen());
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+        return const MainScreen();
+      },), (route) => false,);
     });
   }
 

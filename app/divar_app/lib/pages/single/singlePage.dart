@@ -1,3 +1,4 @@
+import 'package:divar_app/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -14,6 +15,12 @@ class SinglePage extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
+              title: const Text(
+                "Title ss",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               pinned: true,
               automaticallyImplyLeading: false,
               leading: IconButton(
@@ -81,8 +88,133 @@ class SinglePage extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 2.w),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "data",
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "data",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    const Divider(),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "data",
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "data",
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    const Divider(),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 3.w),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "توضیحات",
+                      style: TextStyle(
+                          fontSize: 12.sp, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Text(
+                      "ldadadlaldaldlal lldaldlal lladlalll lal allslsllsdlldl dls lsl dlsl sl lsl dll sl dls ldl ldsl lsl",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: 10.h,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(.4),
+                  offset: const Offset(0, -1),
+                  blurRadius: 4,
+                  blurStyle: BlurStyle.inner),
+            ],
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 3.w),
+          child: Row(
+            children: [
+              Text(
+                "شخصی که آگهی رو قرار داده :",
+                style: TextStyle(
+                  fontSize: 10.sp,
+                ),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorConst.priamaryRedColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {},
+                child: Text(
+                  "پیام در چت",
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

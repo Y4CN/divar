@@ -39,8 +39,11 @@ dependencies:
   dio: ^5.4.0
   sizer: ^2.0.15
   smooth_page_indicator: ^1.1.0
-  get: ^4.6.6
+  # get: ^4.6.6
   loading_animation_widget: ^1.2.0+4
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:

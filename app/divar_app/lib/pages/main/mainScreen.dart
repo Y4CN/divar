@@ -1,5 +1,8 @@
 import 'package:divar_app/const.dart';
+import 'package:divar_app/pages/category/view.dart';
+import 'package:divar_app/pages/chat/view.dart';
 import 'package:divar_app/pages/home/homeScreen.dart';
+import 'package:divar_app/pages/profile/view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -21,9 +24,9 @@ class _MainScreenState extends State<MainScreen> {
         index: indexPage,
         children: const [
           HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
+          CategoryScreen(),
+          ChatScreen(),
+          ProfileScreen()
         ],
       ),
       floatingActionButton: FloatingActionButton(

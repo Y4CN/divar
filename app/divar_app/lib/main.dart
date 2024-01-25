@@ -1,7 +1,7 @@
 import 'package:divar_app/pages/home/homeScreen.dart';
 import 'package:divar_app/pages/splash/splashScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -19,9 +19,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fa'),
+      ],
       locale: const Locale('fa'),
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: "IranSans",
       ),
       // home: HomeScreen(),
