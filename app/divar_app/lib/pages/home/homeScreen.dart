@@ -1,3 +1,4 @@
+import 'package:divar_app/pages/archive/view.dart';
 import 'package:divar_app/pages/single/singlePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                   alignment: WrapAlignment.center,
                   runSpacing: 10,
                   spacing: 15,
-                  children: getCategoryItems(),
+                  children: getCategoryItems(context),
                 ),
               ),
             ),
@@ -132,37 +133,46 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-List<Widget> getCategoryItems() {
+List<Widget> getCategoryItems(context) {
   List<Widget> widgets = [];
 
   for (var i = 0; i < 11; i++) {
     widgets.add(
-      Column(
-        children: [
-          Container(
-            width: 14.w,
-            height: 14.w,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(10),
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ArchiveScreen(),
+              ));
+        },
+        child: Column(
+          children: [
+            Container(
+              width: 14.w,
+              height: 14.w,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              alignment: Alignment.center,
+              child: Image.asset(
+                "assets/images/DivarLogo.png",
+                height: 6.h,
+              ),
             ),
-            alignment: Alignment.center,
-            child: Image.asset(
-              "assets/images/DivarLogo.png",
-              height: 6.h,
+            SizedBox(
+              height: .5.h,
             ),
-          ),
-          SizedBox(
-            height: .5.h,
-          ),
-          Text(
-            "اسم دسته بندی",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 7.sp,
-            ),
-          )
-        ],
+            Text(
+              "اسم دسته بندی",
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 7.sp,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:divar_app/const.dart';
+import 'package:divar_app/pages/archive/view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -30,7 +31,13 @@ class CategoryScreen extends StatelessWidget {
           return Column(
             children: [
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ArchiveScreen(),
+                      ));
+                },
                 title: const Text("data"),
                 leading: Container(
                   height: 40,
@@ -48,7 +55,9 @@ class CategoryScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: const Icon(Icons.adb_sharp),
                 ),
-                trailing: const Icon(CupertinoIcons.forward,),
+                trailing: const Icon(
+                  CupertinoIcons.forward,
+                ),
               ),
               Divider(
                 height: 1.h,
