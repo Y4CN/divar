@@ -2,3 +2,4 @@ api/.env
 
 api/files/category/*
 api/files/items/*
+api/files/items_details/*

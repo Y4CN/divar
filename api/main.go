@@ -12,6 +12,8 @@ func main() {
 	db.AutoMigrate(&model.User{})
 	db.AutoMigrate(&model.Category{})
 	db.AutoMigrate(&model.Items{})
+	db.AutoMigrate(&model.ImagesModel{})
+	db.AutoMigrate(&model.DetailItem{})
 
 	gin.SetMode(gin.DebugMode)
 
@@ -40,6 +42,14 @@ func main() {
 		item.GET("/", route.GetAllItems)
 		item.DELETE("/:id", route.DeleteItem)
 		item.GET("/:categoryId", route.GetItemByCategoryId)
+	}
+	{
+		//! Detail_item
+		detailItem := v1.Group("/detail_item")
+		detailItem.POST("/create/:itemId", route.CreateItemDetail)
+		detailItem.GET("/", route.GetAllItemsDetail)
+		detailItem.DELETE("/:id", route.DeleteItemDetail)
+		detailItem.GET("/:itemId", route.GetItemByItemId)
 	}
 
 	engin.Run(":3000")
