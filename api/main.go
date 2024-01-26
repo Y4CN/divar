@@ -52,5 +52,9 @@ func main() {
 		detailItem.GET("/:itemId", route.GetItemByItemId)
 	}
 
+	v1.Static("./files/category", "./files/category")
+	v1.Static("./files/items", "./files/items")
+	v1.Static("./files/item/images", "./files/items_details")
+
 	engin.Run(":3000")
 }
