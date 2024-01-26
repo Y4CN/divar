@@ -2,11 +2,25 @@ import 'package:divar_app/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 const imageNetwork = "https://www.w3schools.com/w3css/img_lights.jpg";
 
-class SinglePage extends StatelessWidget {
+class SinglePage extends StatefulWidget {
   const SinglePage({super.key});
+
+  @override
+  State<SinglePage> createState() => _SinglePageState();
+}
+
+class _SinglePageState extends State<SinglePage> {
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +29,8 @@ class SinglePage extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
+              foregroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
               title: const Text(
                 "Title ss",
                 style: TextStyle(
@@ -36,9 +52,69 @@ class SinglePage extends StatelessWidget {
               backgroundColor: Colors.white,
               expandedHeight: 30.h,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.network(
-                  imageNetwork,
-                  fit: BoxFit.cover,
+                background: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    PageView.builder(
+                      controller: _pageController,
+                      itemCount: 8,
+                      itemBuilder: (context, index) {
+                        return Image.network(
+                          imageNetwork,
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                    Positioned(
+                      left: 2.w,
+                      bottom: 2.h,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(.6),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 2.w,
+                          vertical: .5.h,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              "2",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Icon(
+                              Icons.window,
+                              color: Colors.white,
+                              size: 2.5.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 2.h,
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        child: SmoothPageIndicator(
+                          controller: _pageController, // PageController
+                          count: 6,
+                          effect: ColorTransitionEffect(
+                            dotColor: Colors.white,
+                            activeDotColor: ColorConst.priamaryRedColor,
+                            dotHeight: 1.5.h,
+                            dotWidth: 1.5.h,
+                            spacing: 6,
+                          ), // your preferred effect
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -97,14 +173,14 @@ class SinglePage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "data",
+                          "قیمت",
                           style: TextStyle(
                             fontSize: 12.sp,
                           ),
                         ),
                         const Spacer(),
                         Text(
-                          "data",
+                          "۱۰۰۰۰",
                           style: TextStyle(
                             fontSize: 10.sp,
                           ),
@@ -121,14 +197,14 @@ class SinglePage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "data",
+                          "وضعیت",
                           style: TextStyle(
                             fontSize: 12.sp,
                           ),
                         ),
                         const Spacer(),
                         Text(
-                          "data",
+                          "در حد نو",
                           style: TextStyle(
                             fontSize: 10.sp,
                           ),
