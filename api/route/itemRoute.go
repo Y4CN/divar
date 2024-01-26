@@ -18,6 +18,7 @@ func CreateItem(ctx *gin.Context) {
 	price := ctx.PostForm("price")
 	image, errImage := ctx.FormFile("image")
 	catId := ctx.Param("categoryId")
+	userId := ctx.Param("userId")
 
 	if len(title) < 3 {
 		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage("Invalid name length should be at least 3 characters"))
@@ -65,12 +66,26 @@ func CreateItem(ctx *gin.Context) {
 		return
 	}
 
+	//! user
+
+	userInt, _ := strconv.Atoi(userId)
+
+	var userModel *(model.User)
+	err = db.First(&userModel, userInt).Error
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage(err.Error()))
+		os.Remove(fmt.Sprintf("files/items/%s", image.Filename))
+		return
+	}
+
 	itemModel := model.Items{
 		Title:      title,
 		Image:      image.Filename,
 		Price:      price,
 		CategoryId: catIdInt,
 		Category:   *categoryItem,
+		User:       *userModel,
+		UserId:     userInt,
 	}
 
 	res := db.Create(&itemModel)
@@ -95,7 +110,7 @@ func CreateItem(ctx *gin.Context) {
 func GetAllItems(ctx *gin.Context) {
 	db := database.GetDB()
 	items := []model.Items{}
-	res := db.Preload("Category").Find(&items)
+	res := db.Preload("Category").Preload("User").Find(&items)
 
 	if res.Error != nil {
 
@@ -134,7 +149,7 @@ func GetItemByCategoryId(ctx *gin.Context) {
 	db := database.GetDB()
 	items := []model.Items{}
 
-	res := db.Where("category_id = ?", catInt).Preload("Category").Find(&items)
+	res := db.Where("category_id = ?", catInt).Preload("Category").Preload("User").Find(&items)
 
 	if res.Error != nil {
 		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(res.Error.Error()))

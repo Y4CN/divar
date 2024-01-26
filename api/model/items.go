@@ -9,4 +9,6 @@ type Items struct {
 	Image      string   `gorm:"column:image;not null" json:"image"`
 	Category   Category `gorm:"foreignKey:CategoryId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION" json:"category"`
 	CategoryId int      `json:"-"`
+	User       User     `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION" json:"user"`
+	UserId     int      `json:"-"`
 }
