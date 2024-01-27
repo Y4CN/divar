@@ -1,3 +1,4 @@
+import 'package:divar_app/pages/dep_injection.dart';
 import 'package:divar_app/pages/home/homeScreen.dart';
 import 'package:divar_app/pages/login/view.dart';
 import 'package:divar_app/pages/splash/splashScreen.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+   await initGetIt();
   runApp(
     Sizer(
       builder: (context, orientation, deviceType) {
@@ -34,8 +37,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: "IranSans",
       ),
-      // home: const SplashScreen(),
-      home: const LoginPage(),
+      home: const SplashScreen(),
+      // home: const LoginPage(),
     );
   }
 }
