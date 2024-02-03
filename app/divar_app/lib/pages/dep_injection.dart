@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:divar_app/pages/Register/controller.dart';
 import 'package:divar_app/pages/category/controller.dart';
+import 'package:divar_app/pages/home/controller.dart';
 import 'package:divar_app/pages/login/controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,4 +23,5 @@ Future<void> initGetIt() async {
   locator.registerSingleton<ILoginController>(LoginController());
   locator.registerSingleton<IRegisterController>(RegisterController());
   locator.registerSingleton<ICategoryController>(CategoryController());
+  locator.registerSingleton<IHomeController>(HomeController());
 }

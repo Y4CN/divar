@@ -38,7 +38,7 @@ func main() {
 	{
 		//! items
 		item := v1.Group("/items")
-		item.POST("/create/:categoryId", route.CreateItem)
+		item.POST("/create/:categoryId/:userId", route.CreateItem)
 		item.GET("/", route.GetAllItems)
 		item.DELETE("/:id", route.DeleteItem)
 		item.GET("/:categoryId", route.GetItemByCategoryId)

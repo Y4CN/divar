@@ -91,12 +91,12 @@ class CategoryScreen extends StatelessWidget {
               );
             }
 
-            return const Center(
+            return  Center(
               child: Text(
                 "out of Context ",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 14.sp,
                 ),
               ),
             );

@@ -20,13 +20,3 @@ class CategoryModel {
     );
   }
 }
-
-    // {
-    //   "ID": 1,
-    //   "CreatedAt": "2024-01-26T17:47:58.059+03:30",
-    //   "UpdatedAt": "2024-01-26T17:47:58.059+03:30",
-    //   "DeletedAt": null,
-    //   "name": "کالای دیجیتال",
-    //   "icon": "mobile-phone-2636.png",
-    //   "image": "istockphoto-479520746-612x612.jpg"
-    // },
