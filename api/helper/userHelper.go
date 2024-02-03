@@ -28,7 +28,7 @@ func RegisterUserService(userName, name, email, pass string) error {
 
 	bytePass := []byte(pass)
 	// hp, err := bcrypt.GenerateFromPassword(bytePass, bcrypt.DefaultCost)
-	hp, err := bcrypt.GenerateFromPassword(bytePass, bcrypt.MaxCost)
+	hp, err := bcrypt.GenerateFromPassword(bytePass, bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
