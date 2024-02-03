@@ -1,3 +1,4 @@
+import 'package:divar_app/const.dart';
 import 'package:divar_app/model/categoryModel.dart';
 import 'package:divar_app/model/userModel.dart';
 
@@ -25,7 +26,7 @@ class ItemsModel {
       id: json['ID'],
       title: json['title'],
       price: json['price'],
-      image: json['image'],
+      image: "${UrlConst.host}files/items/" + json['image'],
       categoryModel: CategoryModel.fromJson(json['category']),
       userModel: UserModel.fromJson(json['user']),
       createdAt: json['CreatedAt']

@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.2.2
   dartz: ^0.10.1
   email_validator: '^2.1.16'
+  shamsi_date: ^1.0.2
 
 
   flutter_localizations:

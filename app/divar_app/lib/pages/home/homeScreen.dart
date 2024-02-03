@@ -8,6 +8,7 @@ import 'package:divar_app/pages/single/singlePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -83,9 +84,15 @@ class HomeScreen extends StatelessWidget {
                       delegate: SliverChildBuilderDelegate(
                         childCount: state.items.length,
                         (context, index) {
+                          DateTime currentTime =
+                              DateTime.parse(state.items[index].createdAt);
+                          final jalaliTime = currentTime.toJalali();
                           return Padding(
                             padding: EdgeInsets.only(
-                                bottom: 1.h, left: 2.w, right: 2.w),
+                              bottom: 1.h,
+                              left: 2.w,
+                              right: 2.w,
+                            ),
                             child: SizedBox(
                               height: 13.h,
                               child: MaterialButton(
@@ -111,12 +118,15 @@ class HomeScreen extends StatelessWidget {
                                         height: 12.h,
                                         width: 12.h,
                                         decoration: BoxDecoration(
-                                          color: Colors.red,
+                                          color: Colors.grey.shade600,
                                           borderRadius:
                                               BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                state.items[index].image),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                        alignment: Alignment.center,
-                                        child: Text(state.items[index].image),
                                       ),
                                       Expanded(
                                         child: Column(
@@ -142,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              state.items[index].createdAt,
+                                              "${jalaliTime.year}/${jalaliTime.month}/${jalaliTime.day}  ${jalaliTime.hour}:${jalaliTime.minute}:${jalaliTime.second}",
                                               style: TextStyle(
                                                 fontSize: 9.sp,
                                               ),
@@ -196,14 +206,19 @@ List<Widget> getCategoryItems(context, List<CategoryModel> categories) {
         child: Column(
           children: [
             Container(
-                width: 14.w,
-                height: 14.w,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                alignment: Alignment.center,
-                child: Text(item.icon)),
+              width: 14.w,
+              height: 14.w,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              alignment: Alignment.center,
+              child: Image.network(
+                item.icon,
+                height: 4.h,
+                fit: BoxFit.contain,
+              ),
+            ),
             SizedBox(
               height: .5.h,
             ),

@@ -8,6 +8,13 @@ class ColorConst {
   static Color priamaryRedColor = const Color(0xffA62426);
 }
 
+
+class  UrlConst{
+  UrlConst._();
+
+  static String host = "http://localhost:3000/api/v1/";
+}
+
 class WidgetConstant {
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
       customSnakeBar(context, String text) {

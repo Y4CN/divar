@@ -1,3 +1,5 @@
+import 'package:divar_app/const.dart';
+
 class CategoryModel {
   int id;
   String name;
@@ -14,9 +16,9 @@ class CategoryModel {
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       id: json['ID'],
-      name: json['name'],
-      icon: json['icon'],
-      image: json['image'],
+      name:json['name'],
+      icon: "${UrlConst.host}files/category/" + json['icon'],
+      image:  "${UrlConst.host}files/category/" + json['image'],
     );
   }
 }

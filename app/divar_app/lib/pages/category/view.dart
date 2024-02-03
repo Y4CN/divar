@@ -59,22 +59,26 @@ class CategoryScreen extends StatelessWidget {
                                 builder: (context) => const ArchiveScreen(),
                               ));
                         },
-                        title:  Text(state.categories[index].name),
+                        title: Text(state.categories[index].name),
                         leading: Container(
                           height: 40,
                           width: 40,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: ColorConst.priamaryRedColor,
-                                  offset: const Offset(1, 1),
-                                  blurRadius: 10,
-                                )
-                              ]),
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.adb_sharp),
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: ColorConst.priamaryRedColor,
+                                offset: const Offset(1, 1),
+                                blurRadius: 10,
+                              )
+                            ],
+                            image: DecorationImage(
+                              image:
+                                  NetworkImage(state.categories[index].image),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
                         trailing: const Icon(
                           CupertinoIcons.forward,
@@ -91,7 +95,7 @@ class CategoryScreen extends StatelessWidget {
               );
             }
 
-            return  Center(
+            return Center(
               child: Text(
                 "out of Context ",
                 style: TextStyle(

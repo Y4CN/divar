@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:divar_app/const.dart';
 import 'package:divar_app/pages/Register/controller.dart';
 import 'package:divar_app/pages/category/controller.dart';
 import 'package:divar_app/pages/home/controller.dart';
@@ -15,7 +16,7 @@ Future<void> initGetIt() async {
 
   locator.registerSingleton<Dio>(
     Dio(
-      BaseOptions(baseUrl: "http://localhost:3000/api/v1/"),
+      BaseOptions(baseUrl:UrlConst.host),
     ),
   );
 
@@ -25,3 +26,5 @@ Future<void> initGetIt() async {
   locator.registerSingleton<ICategoryController>(CategoryController());
   locator.registerSingleton<IHomeController>(HomeController());
 }
+
+

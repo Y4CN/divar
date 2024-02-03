@@ -365,6 +365,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  shamsi_date:
+    dependency: "direct main"
+    description:
+      name: shamsi_date
+      sha256: "19020ef0a001db3eabcec8657f8aa10b93b3746641d9eca64db9a41e6506645c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   shared_preferences:
     dependency: "direct main"
     description:
