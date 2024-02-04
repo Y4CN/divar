@@ -107,7 +107,9 @@ class HomeScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const SinglePage(),
+                                             SinglePage(
+                                               itemid: state.items[index].id,
+                                             ),
                                       ));
                                 },
                                 child: Directionality(

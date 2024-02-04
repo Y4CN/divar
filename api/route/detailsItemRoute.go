@@ -113,7 +113,7 @@ func CreateItemDetail(ctx *gin.Context) {
 func GetAllItemsDetail(ctx *gin.Context) {
 	db := database.GetDB()
 	items := []model.DetailItem{}
-	res := db.Preload("Item.Category").Preload("Images").Preload("Images.DetailItem").Preload("Item").Find(&items)
+	res := db.Preload("Item.Category").Preload("Images").Preload("Images.DetailItem").Preload("Item").Preload("Item.User").Find(&items)
 
 	if res.Error != nil {
 		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(res.Error.Error()))
@@ -149,9 +149,9 @@ func GetItemByItemId(ctx *gin.Context) {
 	itemIdint, _ := strconv.Atoi(itemId)
 
 	db := database.GetDB()
-	items := []model.DetailItem{}
+	items := model.DetailItem{}
 
-	res := db.Where("item_id = ?", itemIdint).Preload("Item.Category").Preload("Images").Preload("Images.DetailItem").Preload("Item").Find(&items)
+	res := db.Where("item_id = ?", itemIdint).Preload("Item.Category").Preload("Images").Preload("Images.DetailItem").Preload("Item").Preload("Item.User").First(&items)
 
 	if res.Error != nil {
 		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(res.Error.Error()))
@@ -162,5 +162,5 @@ func GetItemByItemId(ctx *gin.Context) {
 		"status": true,
 		"item":   items,
 	}
-	ctx.JSON(http.StatusCreated, message)
+	ctx.JSON(http.StatusOK, message)
 }

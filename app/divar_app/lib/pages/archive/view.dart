@@ -35,11 +35,11 @@ class ArchiveScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const SinglePage();
-                    },
-                  ));
+                  // Navigator.push(context, MaterialPageRoute(
+                  //   builder: (context) {
+                  //     return const SinglePage();
+                  //   },
+                  // ));
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 1.5.w),
