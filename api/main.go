@@ -27,6 +27,7 @@ func main() {
 		//! user
 		v1.POST("/register", route.RegisterUser)
 		v1.POST("/login", route.LoginUser)
+		v1.GET("/:userId", route.GetUserById)
 	}
 	{
 		//! category
