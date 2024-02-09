@@ -12,8 +12,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 const imageNetwork = "https://www.w3schools.com/w3css/img_lights.jpg";
 
 class SinglePage extends StatefulWidget {
-  SinglePage({super.key, required this.itemid});
+  SinglePage({super.key, required this.itemid,this.heroTag});
   int itemid;
+  String? heroTag;
 
   @override
   State<SinglePage> createState() => _SinglePageState();
@@ -88,16 +89,20 @@ class _SinglePageState extends State<SinglePage> {
                             background: Stack(
                               fit: StackFit.expand,
                               children: [
-                                PageView.builder(
-                                  controller: _pageController,
-                                  itemCount:
-                                      state.detailItemModel.images.length,
-                                  itemBuilder: (context, index) {
-                                    return Image.network(
-                                      state.detailItemModel.images[index].image,
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
+                                Hero(
+                                  tag: widget.heroTag ?? "",
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    itemCount:
+                                        state.detailItemModel.images.length,
+                                    itemBuilder: (context, index) {
+                                      return Image.network(
+                                        state.detailItemModel.images[index]
+                                            .image,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  ),
                                 ),
                                 Positioned(
                                   left: 2.w,

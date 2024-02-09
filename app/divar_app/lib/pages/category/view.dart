@@ -56,7 +56,7 @@ class CategoryScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ArchiveScreen(),
+                                builder: (context) => ArchiveScreen(categoryModel: state.categories[index],),
                               ));
                         },
                         title: Text(state.categories[index].name),

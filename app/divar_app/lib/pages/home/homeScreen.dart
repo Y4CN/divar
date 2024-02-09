@@ -87,6 +87,7 @@ class HomeScreen extends StatelessWidget {
                           DateTime currentTime =
                               DateTime.parse(state.items[index].createdAt);
                           final jalaliTime = currentTime.toJalali();
+                          String heroTag = state.items[index].image;
                           return Padding(
                             padding: EdgeInsets.only(
                               bottom: 1.h,
@@ -106,27 +107,30 @@ class HomeScreen extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                             SinglePage(
-                                               itemid: state.items[index].id,
-                                             ),
+                                        builder: (context) => SinglePage(
+                                          itemid: state.items[index].id,
+                                          heroTag: heroTag,
+                                        ),
                                       ));
                                 },
                                 child: Directionality(
                                   textDirection: TextDirection.ltr,
                                   child: Row(
                                     children: [
-                                      Container(
-                                        height: 12.h,
-                                        width: 12.h,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade600,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                                state.items[index].image),
-                                            fit: BoxFit.cover,
+                                      Hero(
+                                        tag: heroTag,
+                                        child: Container(
+                                          height: 12.h,
+                                          width: 12.h,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.shade600,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  state.items[index].image),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -202,7 +206,9 @@ List<Widget> getCategoryItems(context, List<CategoryModel> categories) {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ArchiveScreen(),
+                builder: (context) => ArchiveScreen(
+                  categoryModel: item,
+                ),
               ));
         },
         child: Column(
