@@ -74,7 +74,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 1,
                       mainAxisSpacing: 8,
-                      childAspectRatio: .65,
+                      childAspectRatio: .7,
                     ),
                     itemCount: state.items.length,
                     itemBuilder: (context, index) {
@@ -132,6 +132,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                               ),
                               Text(
                                 state.items[index].title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w700,

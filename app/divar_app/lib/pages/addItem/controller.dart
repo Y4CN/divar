@@ -36,10 +36,10 @@ class AddItemController extends IAddItemController {
           "description": description,
           "status": status,
         });
-        for (var i = 1; i < images.length; i++) {
-          _formData.files.add(
+        for (var i = 0; i < images.length; i++) {
+          _formDataDetail.files.add(
             MapEntry(
-              'image',
+              'images',
               await MultipartFile.fromFile(images[i].path),
             ),
           );

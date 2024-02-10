@@ -67,115 +67,121 @@ class HomeScreen extends StatelessWidget {
                 );
               }
               if (state is HomeResponseState) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.symmetric(vertical: 1.5.h),
-                      sliver: SliverToBoxAdapter(
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          runSpacing: 10,
-                          spacing: 15,
-                          children: getCategoryItems(context, state.category),
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    BlocProvider.of<HomeBloc>(context)
+                        .add(HomeRequestAllDataEvent());
+                  },
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                        sliver: SliverToBoxAdapter(
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            runSpacing: 10,
+                            spacing: 15,
+                            children: getCategoryItems(context, state.category),
+                          ),
                         ),
                       ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        childCount: state.items.length,
-                        (context, index) {
-                          DateTime currentTime =
-                              DateTime.parse(state.items[index].createdAt);
-                          final jalaliTime = currentTime.toJalali();
-                          String heroTag = state.items[index].image;
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              bottom: 1.h,
-                              left: 2.w,
-                              right: 2.w,
-                            ),
-                            child: SizedBox(
-                              height: 13.h,
-                              child: MaterialButton(
-                                color: Colors.grey.shade200,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 2.w, vertical: 1.h),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SinglePage(
-                                          itemid: state.items[index].id,
-                                          heroTag: heroTag,
-                                        ),
-                                      ));
-                                },
-                                child: Directionality(
-                                  textDirection: TextDirection.ltr,
-                                  child: Row(
-                                    children: [
-                                      Hero(
-                                        tag: heroTag,
-                                        child: Container(
-                                          height: 12.h,
-                                          width: 12.h,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade600,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  state.items[index].image),
-                                              fit: BoxFit.cover,
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: state.items.length,
+                          (context, index) {
+                            DateTime currentTime =
+                                DateTime.parse(state.items[index].createdAt);
+                            final jalaliTime = currentTime.toJalali();
+                            String heroTag = state.items[index].image;
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 1.h,
+                                left: 2.w,
+                                right: 2.w,
+                              ),
+                              child: SizedBox(
+                                height: 13.h,
+                                child: MaterialButton(
+                                  color: Colors.grey.shade200,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 2.w, vertical: 1.h),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SinglePage(
+                                            itemid: state.items[index].id,
+                                            heroTag: heroTag,
+                                          ),
+                                        ));
+                                  },
+                                  child: Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: Row(
+                                      children: [
+                                        Hero(
+                                          tag: heroTag,
+                                          child: Container(
+                                            height: 12.h,
+                                            width: 12.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade600,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                    state.items[index].image),
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              state.items[index].title,
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                fontSize: 9.sp,
-                                                fontWeight: FontWeight.w700,
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                state.items[index].title,
+                                                textAlign: TextAlign.end,
+                                                style: TextStyle(
+                                                  fontSize: 9.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              state.items[index].price,
-                                              style: TextStyle(
-                                                fontSize: 9.sp,
+                                              Text(
+                                                state.items[index].price,
+                                                style: TextStyle(
+                                                  fontSize: 9.sp,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "${jalaliTime.year}/${jalaliTime.month}/${jalaliTime.day}  ${jalaliTime.hour}:${jalaliTime.minute}:${jalaliTime.second}",
-                                              style: TextStyle(
-                                                fontSize: 9.sp,
+                                              Text(
+                                                "${jalaliTime.year}/${jalaliTime.month}/${jalaliTime.day}  ${jalaliTime.hour}:${jalaliTime.minute}:${jalaliTime.second}",
+                                                style: TextStyle(
+                                                  fontSize: 9.sp,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  ],
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
                 );
               }
 
