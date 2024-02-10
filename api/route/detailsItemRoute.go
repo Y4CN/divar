@@ -20,7 +20,7 @@ func CreateItemDetail(ctx *gin.Context) {
 	itemId := ctx.Param("itemId")
 
 	if len(description) < 8 {
-		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage("Invalid name length should be at least 3 characters"))
+		ctx.JSON(http.StatusBadRequest, helper.ErrorMessage("Invalid name length should be at least 8 characters"))
 		return
 	}
 

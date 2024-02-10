@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:divar_app/const.dart';
 import 'package:divar_app/pages/Register/controller.dart';
+import 'package:divar_app/pages/addItem/controller.dart';
 import 'package:divar_app/pages/archive/controller.dart';
 import 'package:divar_app/pages/category/controller.dart';
 import 'package:divar_app/pages/home/controller.dart';
@@ -31,6 +32,7 @@ Future<void> initGetIt() async {
   locator.registerSingleton<ISingleController>(SingleController());
   locator.registerSingleton<IProfileController>(ProfileController());
   locator.registerSingleton<IArchiveController>(ArchiveController());
+  locator.registerSingleton<IAddItemController>(AddItemController());
 }
 
 

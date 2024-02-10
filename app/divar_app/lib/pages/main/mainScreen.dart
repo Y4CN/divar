@@ -1,4 +1,5 @@
 import 'package:divar_app/const.dart';
+import 'package:divar_app/pages/addItem/view.dart';
 import 'package:divar_app/pages/category/view.dart';
 import 'package:divar_app/pages/chat/view.dart';
 import 'package:divar_app/pages/home/homeScreen.dart';
@@ -30,7 +31,14 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddItemPage(),
+            ),
+          );
+        },
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(1000),
