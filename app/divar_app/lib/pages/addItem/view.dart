@@ -5,6 +5,7 @@ import 'package:divar_app/model/categoryModel.dart';
 import 'package:divar_app/pages/addItem/bloc/additem_bloc.dart';
 import 'package:divar_app/pages/addItem/bloc/additem_event.dart';
 import 'package:divar_app/pages/addItem/bloc/additem_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -69,7 +70,8 @@ class _AddItemPageState extends State<AddItemPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              WidgetConstant.customTextFeild(_titleController, context, "عنوان"),
+              WidgetConstant.customTextFeild(
+                  _titleController, context, "عنوان"),
               WidgetConstant.customTextFeild(
                   _priceController, context, 'قیمت پیشنهادی'),
               WidgetConstant.customTextFeild(
@@ -246,7 +248,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     for (var element in imageLST) {
                       _images.add(File(element.path));
                     }
-          
+
                     _valueNotifier.value = _images.length;
                     // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
                     _valueNotifier.notifyListeners();
@@ -283,17 +285,38 @@ class _AddItemPageState extends State<AddItemPage> {
                             itemCount: value,
                             controller: _pageController,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: 2.w, vertical: 1.5.h),
-                                decoration: BoxDecoration(
-                                  // color: Colors.green,
-                                  image: DecorationImage(
-                                    image: FileImage(_images[index]),
-                                    fit: BoxFit.cover,
+                              return Stack(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 2.w, vertical: 1.5.h),
+                                    decoration: BoxDecoration(
+                                      // color: Colors.green,
+                                      image: DecorationImage(
+                                        image: FileImage(_images[index]),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
+                                  Positioned(
+                                    right: 5,
+                                    top: 8,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        _images.removeAt(index);
+                                        _valueNotifier.value = _images.length;
+                                        // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                                        _valueNotifier.notifyListeners();
+                                      },
+                                      icon: Icon(
+                                        CupertinoIcons.trash_circle,
+                                        size: 5.h,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               );
                             },
                           ),
@@ -327,12 +350,11 @@ class _AddItemPageState extends State<AddItemPage> {
                       WidgetConstant.customSnakeBar(context, state.err);
                       return;
                     }
-          
+
                     if (state is AddItemResponseSubmitState) {
                       WidgetConstant.customSnakeBar(context, state.response);
                       Navigator.pop(context);
                     }
-                    
                   },
                   builder: (context, state) {
                     if (state is AddItemLoadingSumbitState) {
@@ -340,7 +362,7 @@ class _AddItemPageState extends State<AddItemPage> {
                         child: WidgetConstant.loadingAnimation(8.w),
                       );
                     }
-          
+
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(50.w, 5.h),
@@ -356,7 +378,8 @@ class _AddItemPageState extends State<AddItemPage> {
                           return;
                         }
                         if (_priceController.text.trim().isEmpty) {
-                          WidgetConstant.customSnakeBar(context, "قیمت خالی است");
+                          WidgetConstant.customSnakeBar(
+                              context, "قیمت خالی است");
                           return;
                         }
                         if (_descriptionController.text.trim().isEmpty) {
@@ -364,13 +387,14 @@ class _AddItemPageState extends State<AddItemPage> {
                               context, "توضیحات خالی است");
                           return;
                         }
-                        var price = double.tryParse(_priceController.text.trim());
+                        var price =
+                            double.tryParse(_priceController.text.trim());
                         if (price == null) {
                           WidgetConstant.customSnakeBar(
                               context, "قیمت را درست وارد نکردین ");
                           return;
                         }
-          
+
                         if (categoryModel == null) {
                           WidgetConstant.customSnakeBar(
                               context, "شما دسته بندی انتخاب نکردین ");
@@ -386,7 +410,7 @@ class _AddItemPageState extends State<AddItemPage> {
                               context, "حداقل باید ۲ عکس انتخاب کنین ");
                           return;
                         }
-          
+
                         BlocProvider.of<AddItemBloc>(context).add(
                           AddItemRequestAddEvent(
                             categoryId: categoryModel!.id,
