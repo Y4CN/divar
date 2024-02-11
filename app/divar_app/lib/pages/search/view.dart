@@ -28,44 +28,53 @@ class SearchPage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Builder(
-                    builder: (context) {
-                      return TextField(
-                        controller: _searchController,
-                        onTapOutside: (event) {
-                          FocusScope.of(context).unfocus();
-                        },
-                        onSubmitted: (value) {
-                          // BlocProvider.of<SearchBloc>(context).add(
-                          //   SearchRequestEvent(_searchController.text.trim()),
-                          // );
-                          context.read<SearchBloc>().add( SearchRequestEvent(_searchController.text.trim()),);
-                        },
-                        decoration: InputDecoration(
-                          hintText: "جستجو در همه آگهی ها",
-                          hintStyle: TextStyle(fontSize: 10.sp),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 2.w),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon: IconButton(
-                            onPressed: () {
-                              BlocProvider.of<SearchBloc>(context).add(
-                                SearchRequestEvent(_searchController.text.trim()),
-                              );
-                            },
-                            icon: Icon(
-                              CupertinoIcons.search,
-                              color: Colors.grey.shade400,
-                            ),
+                  child: Builder(builder: (context) {
+                    return TextField(
+                      controller: _searchController,
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus();
+                      },
+                      onSubmitted: (value) {
+                        if (_searchController.text.trim().isEmpty) {
+                          WidgetConstant.customSnakeBar(
+                              context, "مقدار جست و جو خالی است");
+
+                          return;
+                        }
+                        context.read<SearchBloc>().add(
+                              SearchRequestEvent(_searchController.text.trim()),
+                            );
+                      },
+                      decoration: InputDecoration(
+                        hintText: "جستجو در همه آگهی ها",
+                        hintStyle: TextStyle(fontSize: 10.sp),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 2.w),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        prefixIcon: IconButton(
+                          onPressed: () {
+                            if (_searchController.text.trim().isEmpty) {
+                              WidgetConstant.customSnakeBar(
+                                  context, "مقدار جست و جو خالی است");
+
+                              return;
+                            }
+                            BlocProvider.of<SearchBloc>(context).add(
+                              SearchRequestEvent(_searchController.text.trim()),
+                            );
+                          },
+                          icon: Icon(
+                            CupertinoIcons.search,
+                            color: Colors.grey.shade400,
                           ),
                         ),
-                      );
-                    }
-                  ),
+                      ),
+                    );
+                  }),
                 ),
                 IconButton(
                   onPressed: () {
