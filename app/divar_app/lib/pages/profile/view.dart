@@ -2,6 +2,8 @@ import 'package:divar_app/const.dart';
 import 'package:divar_app/pages/profile/bloc/profile_bloc.dart';
 import 'package:divar_app/pages/profile/bloc/profile_event.dart';
 import 'package:divar_app/pages/profile/bloc/profile_state.dart';
+import 'package:divar_app/pages/share_manager.dart';
+import 'package:divar_app/pages/splash/splashScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +57,9 @@ class ProfileScreen extends StatelessWidget {
                       minRadius: 10.w,
                       maxRadius: 10.w,
                       backgroundColor: Colors.grey.shade300,
-                      child: const Icon(CupertinoIcons.person,),
+                      child: const Icon(
+                        CupertinoIcons.person,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -93,7 +97,19 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.logout_rounded),
-                    onTap: () {},
+                    onTap: () async {
+                      bool isLogout = await ShareManager.logOut();
+                      if (isLogout) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SplashScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    },
                     trailing: const Icon(
                       CupertinoIcons.forward,
                     ),
