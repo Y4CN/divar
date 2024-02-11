@@ -4,6 +4,7 @@ import 'package:divar_app/pages/archive/view.dart';
 import 'package:divar_app/pages/home/bloc/home_bloc.dart';
 import 'package:divar_app/pages/home/bloc/home_event.dart';
 import 'package:divar_app/pages/home/bloc/home_state.dart';
+import 'package:divar_app/pages/search/view.dart';
 import 'package:divar_app/pages/single/singlePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,14 @@ class HomeScreen extends StatelessWidget {
           title: Padding(
             padding: EdgeInsets.symmetric(horizontal: .5.w, vertical: 1.h),
             child: TextField(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>  SearchPage(),
+                    ));
+              },
               onTapOutside: (event) {
                 FocusScope.of(context).unfocus();
               },

@@ -21,4 +21,8 @@ class ShareManager {
   static String? getUserToken() {
     return _share.getString("user_token");
   }
+
+  static Future<bool> logOut() async {
+    return await _share.clear();
+  }
 }

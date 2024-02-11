@@ -162,3 +162,24 @@ func GetItemByCategoryId(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusCreated, message)
 }
+
+func GetItemBySearch(ctx *gin.Context) {
+	searchTxt := ctx.Request.FormValue("txt")
+
+	db := database.GetDB()
+	items := []model.Items{}
+	likeSearch := fmt.Sprintf("%%%s%%", searchTxt)
+
+	res := db.Where("title LIKE ?", likeSearch).Preload("Category").Preload("User").Find(&items)
+
+	if res.Error != nil {
+		ctx.JSON(http.StatusBadGateway, helper.ErrorMessage(res.Error.Error()))
+		return
+	}
+
+	message := map[string]any{
+		"status": true,
+		"item":   items,
+	}
+	ctx.JSON(http.StatusCreated, message)
+}

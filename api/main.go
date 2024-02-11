@@ -43,6 +43,7 @@ func main() {
 		item.GET("/", route.GetAllItems)
 		item.DELETE("/:id", route.DeleteItem)
 		item.GET("/:categoryId", route.GetItemByCategoryId)
+		item.GET("/search", route.GetItemBySearch)
 	}
 	{
 		//! Detail_item

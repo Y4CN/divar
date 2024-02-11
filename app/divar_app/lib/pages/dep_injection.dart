@@ -7,6 +7,7 @@ import 'package:divar_app/pages/category/controller.dart';
 import 'package:divar_app/pages/home/controller.dart';
 import 'package:divar_app/pages/login/controller.dart';
 import 'package:divar_app/pages/profile/controller.dart';
+import 'package:divar_app/pages/search/controller.dart';
 import 'package:divar_app/pages/single/controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +34,7 @@ Future<void> initGetIt() async {
   locator.registerSingleton<IProfileController>(ProfileController());
   locator.registerSingleton<IArchiveController>(ArchiveController());
   locator.registerSingleton<IAddItemController>(AddItemController());
+  locator.registerSingleton<ISearchController>(SearchController());
 }
 
 
