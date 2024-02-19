@@ -1,6 +1,4 @@
 import 'package:divar_app/pages/dep_injection.dart';
-import 'package:divar_app/pages/home/homeScreen.dart';
-import 'package:divar_app/pages/login/view.dart';
 import 'package:divar_app/pages/splash/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,7 +36,6 @@ class MyApp extends StatelessWidget {
         fontFamily: "IranSans",
       ),
       home: const SplashScreen(),
-      // home: const LoginPage(),
     );
   }
 }
